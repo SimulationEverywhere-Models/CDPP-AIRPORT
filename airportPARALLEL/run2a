@@ -1,0 +1,4 @@
+#time -o airport2a.time -a /usr/local/mpich/bin/mpirun -np 2 ../../pcd++/pcd -mAEROPUER.MA -Pairport2a.par -t00:00:05:000 -eaeropuer.ev -oairport2a.out -l>airport2a.log
+#time -o airport2a.time -a /usr/local/mpich/bin/mpirun -np 2 ../../pcd++/pcd -mAEROPUER.MA -Pairport2a.par -t00:01:00:000 -eaeropuer.ev -oairport2a.out -l | ../../pcd++/logbuffer -b5000 | ../../pcd++/parlog -Pairport2a.par > airport2a.p
+time -o airport2a.time -a /usr/local/mpich/bin/mpirun -np 2 ../../pcd++/pcd -mAEROPUER.MA -Pairport2a.par -t00:01:00:000 -eaero2a.ev -oairport2a.out -l | ../../pcd++/logbuffer -b5000 | ../../pcd++/parlog -Pairport2a.par > airport2a.p
+

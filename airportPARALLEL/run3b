@@ -1,0 +1,4 @@
+#time -o airport3b.time -a /usr/local/mpich/bin/mpirun -np 3 ../../pcd++/pcd -mAEROPUER.MA -Pairport3b.par -t00:00:05:000 -eaeropuer.ev -oairport3b.out -l>airport3b.log
+#time -o airport3b.time -a /usr/local/mpich/bin/mpirun -np 3 ../../pcd++/pcd -mAEROPUER.MA -Pairport3b.par -t00:01:00:000 -eaeropuer.ev -oairport3b.out -l | ../../pcd++/logbuffer -b5000 | ../../pcd++/parlog -Pairport3b.par > airport3b.p
+time -o airport3b.time -a /usr/local/mpich/bin/mpirun -np 3 ../../pcd++/pcd -mAEROPUER.MA -Pairport3b.par -t00:01:00:000 -eaero3b.ev -oairport3b.out -l | ../../pcd++/logbuffer -b5000 | ../../pcd++/parlog -Pairport3b.par > airport3b.p
+

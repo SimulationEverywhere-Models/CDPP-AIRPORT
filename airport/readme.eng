@@ -1,0 +1,81 @@
+
+Model of Simulation of an Airport
+-------------------------------------------------
+
+Luciano Burotti
+Luis Fernando De Simoni
+
+
+README
+
+This model of Simulation was developed by Luciano Burotti and Luis Fernando De Simoni, for the subject 
+Simulation of Discreet Events dictated by the PH.d. Gabriel Wainer.
+
+
+
+Installation
+-------------
+
+This model has been developed under C++, using the CD++ developed by Amir Barylko and Jorge 
+Beyoglonian. It has been compiled under LINUX successfully, only using the provided makefile. Then, the  
+executable file airport was generated.
+	
+
+
+Execution
+------------
+
+We included in the distribution, files of execution of the Airport.To use it: 
+
+./sh airport1.sh
+./sh airport2.sh
+./sh airport3.sh
+./sh airport4.sh
+
+
+
+
+Airportx.sh------>	  	airportx.log  //Messages of the simulation
+				airportx.out  //Result of the Simulation	
+
+
+
+
+Also you can execute simulations modifying the files .ev and executing
+
+./airport 	-mairport.ma 		-eevents.ev 	-lairport.log 	-oairport.out
+
+  |		|			|		|		|
+  |		|			|		|		|_ File of Output
+  |		|			|		|_ File of log of messages
+  |		|			|__ File of events of the Airport
+  |		|__ Coupled Model of the Airport.
+  |__Executable 
+
+
+The same ones use the files of events aero1.ev, aero2.ev, aero3.ev, aero4.ev, and they generate as exit the 
+files:
+
+
+Files
+-----------
+
+makefile	--- I file script of compilation of the Airport
+register.cpp 	--- Here the models are registered in the simulation
+airport.ma  	--- The coupled pattern of the airport
+*.ev           --- Events of the simulation 
+doc
+|_doc	airport.doc  	--- Tech information about the Airport in format WORD 97(Spanish Only)
+|_pfd	airport.pdf     --- Tech information about the Airport in format PDF	(Spanish Only)
+|_html	airport.htm     --- Tech information about the Airport in format HTML	(Spanish Only)
+
+
+
+
+
+Luciano Burotti 		lburotti@dc.uba.ar
+Luis Fernando Of Simoni	ldesimon@dc.uba.ar 
+
+Last bring up to date: September of 2000.
+If you have a problem compiling the Airport please mail us. 
+

@@ -1,0 +1,4 @@
+#time -o airport4b.time -a /usr/local/mpich/bin/mpirun -np 4 ../../pcd++/pcd -mAEROPUER.MA -Pairport4b.par -t00:00:05:000 -eaeropuer.ev -oairport4b.out -l>airport4b.log
+#time -o airport4b.time -a /usr/local/mpich/bin/mpirun -np 4 ../../pcd++/pcd -mAEROPUER.MA -Pairport4b.par -t00:01:00:000 -eaeropuer.ev -oairport4b.out -l | ../../pcd++/logbuffer -b5000 | ../../pcd++/parlog -Pairport4b.par > airport4b.p
+time -o airport4b.time -a /usr/local/mpich/bin/mpirun -np 4 ../../pcd++/pcd -mAEROPUER.MA -Pairport4b.par -t00:01:00:000 -eaero4b.ev -oairport4b.out -l | ../../pcd++/logbuffer -b5000 | ../../pcd++/parlog -Pairport4b.par > airport4b.p
+

@@ -1,0 +1,260 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Informe Trabajo Practico</TITLE>
+</HEAD>
+<BODY>
+
+<B><FONT FACE="Arial"><P ALIGN="CENTER"> Trabajo Pr&aacute;ctico</P>
+</FONT><FONT FACE="Arial" SIZE=2><P ALIGN="CENTER">Simulaci&oacute;n de Eventos Discretos</P>
+<P ALIGN="CENTER"></P>
+<P ALIGN="CENTER">&nbsp;</P>
+<P ALIGN="CENTER">&nbsp;</P>
+<P>Introducci&oacute;n</P>
+</B>
+<P ALIGN="JUSTIFY">El modelo consiste en la simulaci&oacute;n de un Aeropuerto, el cual est&aacute; capacitado para recibir aviones y los mismos aviones son llevados a sus correspondientes hangares seg&uacute;n el n&uacute;mero de vuelo, permanecen en sus depositos y son enviados nuevamente a una cola de salida para que la torre de control autorice su despegue y posteriormente dejen el aeropuerto. </P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<B><P>Desarrollo</P>
+</B>
+<P>&nbsp;</P>
+<I><P>Modelo At&oacute;mico Torre de Control</P>
+</I>
+<P ALIGN="JUSTIFY">Para<B> </B>el desarrollo del modelo Aeropuerto (acoplado), fue indispensable realizar m&oacute;dulos at&oacute;micos bien marcados.  El coraz&oacute;n del aeropuerto esta conformado por la Torre de Control, esta decide a quien despegue o aterrizaje seg&uacute;n la prioridad, fue nuestra decisi&oacute;n otorgarle mayor prioridad a los aviones que aterrizan sobre los que despegan. </P>
+<B>
+<P>&nbsp;</P>
+<P><IMG SRC="Image24.jpg" WIDTH=517 HEIGHT=388></P>
+<P ALIGN="CENTER"></P>
+<P ALIGN="CENTER">&nbsp;</P>
+</B><P ALIGN="JUSTIFY">Este modelo at&oacute;mico tiene dos puertos de entrada y 6 puertos de salida, por los puertos In_i recibe los aviones que aterrizan o despegan, cuando un avi&oacute;n obtiene el permiso de aterrizar o despegar la torre de control bloquea el acceso a otros aviones que desean aterrizar o despegar esto lo hace mediante los puertos Stop_a y Stop_d, una vez que el avi&oacute;n a dejado la pista de aterrizaje libre env&iacute;a una se&ntilde;al por los puertos Done_a y Done_d informando que la pista se encuentra libre para su uso y que est&aacute; dispuesta a autorizar otra acci&oacute;n. </P>
+<P ALIGN="JUSTIFY">Cuando un avi&oacute;n es recibido por el port In_a este desea aterrizar y es por ello que la Torre de control se lo env&iacute;a automaticamente a la pista por el port aterriza y se pasiva por el tiempo que la pista esta en uso debido al aterrizaje del avi&oacute;n ( 1 min.).  En cambio si el avi&oacute;n es recibido por el port In_d la Torre de Control lo env&iacute;a por el port Out_d hacia la pista y se pasiva por el tiempo que el avi&oacute;n tarda en despegar (1 min.).</P>
+<P>&#9;</P>
+
+<I><P>Modelo At&oacute;mico Cola    </P>
+</I><B><P ALIGN="JUSTIFY"></P>
+<P ALIGN="JUSTIFY">   </B>&#9;Una vez que definida la Torre de Control sabemos que esta recibe aviones de dos colas, para ello hemos registrado un nuevo modelo at&oacute;mico llamado cola.</P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&#9;<IMG SRC="Image25.jpg" WIDTH=587 HEIGHT=440></P>
+
+<P>&nbsp;</P>
+<P ALIGN="JUSTIFY">Esta cola tiene tres puertos de entrada y un puerto de salida, esta recibe aviones por el port In y los encola,  contiene una variable llamada ocupado la cual se setea a cero con Init_Function  (es decir que esta libre), si el avi&oacute;n llega por el puerto In y esta variable esta en cero dicho avi&oacute;n es enviado por el puerto Out, en cambio si la variable ocupado esta en uno el avi&oacute;n es encolado, esta variable es seteada (en tiempo de simulaci&oacute;n) seg&uacute;n los valores que ingresan por el puerto Stop y Done, Stop setea la variable ocupado en uno y Libre la setea a cero, esto simula que el modelo al cual nosotros enviamos el avi&oacute;n se encuentra ocupado y nosotros debemos esperar a que se libere.</P>
+
+<P>&nbsp;</P>
+<I><P>Modelo At&oacute;mico Pista de Aterrizaje</P>
+</I>
+<P ALIGN="JUSTIFY">La pista de aterrizaje tambi&eacute;n es fundamental para modular el aeropuerto, esta tiene la funci&oacute;n de recibir los aviones y seg&uacute;n la acci&oacute;n que estos requieran (despegar o aterrizar), enviarlos a los ports correspondientes.</P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P><IMG SRC="Image26.jpg" WIDTH=587 HEIGHT=477></P>
+
+<P ALIGN="JUSTIFY">Este modelo tiene dos puertos de entrada y dos puertos de salida, por el port aterrizaje ingresan los aviones que desean aterrizan y por el port despegue los aviones que depegan.  Este modelo al recibir un avi&oacute;n por estos ports se activa durante un minuto, tiempo que tarda un avi&oacute;n en depegar o aterrizar y luego lo env&iacute;a por el port de salida correspondiente dependiendo si el ingreso se produjo por el port aterriza (lo env&iacute;a al port salida_a), o por el port despega (al port salida_d).  Este modelo solo puede recibir un avi&oacute;n a la vez y no puede recibir otro durante el siguiente minuto, de lo contrario el avion que estaba utilizando la pista se pierde, es por ello que al acoplarlo con la torre de control esta debe tenerlo en cuenta.</P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<B><P>Modelo Acoplado Hangar</P>
+</B>
+<P>&nbsp;</P>
+<I><P>Modelo At&oacute;mico Selector</P>
+</I><B>
+</B><P ALIGN="JUSTIFY">&#9; El selector recibe un avi&oacute;n y seg&uacute;n su n&uacute;mero de vuelo lo env&iacute;a al deposito correspondiente.</P>
+
+<P><IMG SRC="Image27.jpg" WIDTH=585 HEIGHT=438></P>
+<B>
+</B><P ALIGN="JUSTIFY">&#9;Este modelo tiene un port de entrada (In) y cuatro ports de salida (out1, out2, out3 y  out4). Al recibir un avi&oacute;n por el puerto In verifica el n&uacute;mero de vuelo, es decir la parte entera del n&uacute;mero de avi&oacute;n, si este n&uacute;mero esta entre cero y 249 lo env&iacute;a a Out1, si se encuentra entre 250 y 499 lo env&iacute;a al port Out2, si se encuentra entre 500 y 749 lo env&iacute;a al port Out3 y por &uacute;ltimo si se encuentra entre 750 y 999 lo env&iacute;a al Out 4.  El direccionamiento es inmediato.</P>
+
+<P>&nbsp;</P>
+<I><P>Modelo at&oacute;mico Dep&oacute;sito</P>
+</I>
+<P ALIGN="JUSTIFY">&#9;Este modelo se encarga de depositar a los aviones que ingresan en una cola y una vez que esten listos enviarlos a la salida para que despeguen  y dejen el aeropuerto.</P>
+
+<P><IMG SRC="Image28.jpg" WIDTH=585 HEIGHT=438></P>
+
+<P ALIGN="JUSTIFY">&#9;Solamente tiene un puerto de entrada y un puerto de salida, al recibir un avi&oacute;n si la cola esta vac&iacute;a lo env&iacute;a a la salida, caso contario lo encola para luego enviarlo.</P>
+<P ALIGN="JUSTIFY"></P>
+<P>&nbsp;</P>
+<I><P>Modelo atomico Salida</P>
+</I>
+<P ALIGN="JUSTIFY">&#9;El modelo Salida tiene como fin unir las salidas de los dep&oacute;sitos y encolar los aviones para que salgan a la cola de despegue, su funci&oacute;n es prevenir los choques de aviones a la salida de los dep&oacute;sitos, ya que si dos aviones salen en el mismo instante y son enviados a una sola entrada uno de los dos se pierde en la simulaci&oacute;n, y nuestro objetivo es que todos los aviones que aterrizan, luego de un cierto tiempo puedan despegar.</P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&#9;</P>
+<P><IMG SRC="Image29.jpg" WIDTH=585 HEIGHT=438></P>
+
+<P ALIGN="JUSTIFY">El modelo at&oacute;mico consta de cuatro ports de entrada y un solo puerto de salida, al ingresar un avi&oacute;n se encola y luego se env&iacute;a a la salida sin demora.  En el caso de que ingresen en el mismo instante cuatro aviones la prioridad esta dada en el siguiente orden In1 , In2, In3 y In4.</P>
+
+<P>&nbsp;</P>
+<P ALIGN="JUSTIFY">Finalmente podemos acoplar los modelos at&oacute;micos para formar el modelo acoplado Hangar:</P>
+
+<P>&nbsp;</P>
+<P><IMG SRC="Image30.jpg" WIDTH=585 HEIGHT=438></P>
+
+<P ALIGN="JUSTIFY">Como primera observaci&oacute;n este modelo Acoplado esta formado por un selector, cuatro dep&oacute;sitos y un modelo salida. Este modelo acoplado tiene dos puertos un puerto de entrada In y un puerto de salida Out. El puerto de entrada In esta conectado al puerto  In del selector , es aqu&iacute; donde el avi&oacute;n es llevado a su dep&oacute;sito correspondiente, es por ello que las cuatro salidas del selector se conectan cada una a un dep&oacute;sito.  Luego los cuatro dep&oacute;sitos conectan su puerto de salida Out a las entradas de salida, este modelo at&oacute;mico los direcciona hacia la salida, es por ello que la el puerto Out del modelo salida se une a el puerto Out del modelo acoplado (hangar).</P>
+
+<P ALIGN="JUSTIFY">Este modelo ser&aacute; utilizado por el modelo Aeropuerto como un caja negra que tiene un port de entrada In y un port de salida Out.</P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<B><P>Modelo Acoplado Aeropuerto</P>
+</B>
+<P ALIGN="JUSTIFY">Una vez que ya tenemos definido todos los modelos at&oacute;micos y b&aacute;sicos que se utilizar&aacute;n en el aeropuerto podemos definir su comunicaci&oacute;n.</P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<P><IMG SRC="Image31.jpg" WIDTH=585 HEIGHT=438></P>
+
+<P> </P>
+<P ALIGN="JUSTIFY">Este modelo acoplado esta conformado por dos colas (cola_aterrizaje y cola_despegue) una torre de control (control) una pista de aterrizaje (pista) y un Hangar, definidos anteriormente. </P>
+<P ALIGN="JUSTIFY">&#9;Los ports de entrada y salida que tiene este modelo acoplado son In y Out, el primero puerto In de entrada recibe los aviones que desean aterrizar en este aeropuerto, y el puerto de salida Out los que desean despegar.</P>
+<P ALIGN="JUSTIFY">&#9;Al ingresar un avi&oacute;n por el port In este se conecta al puerto In de la cola de aterrizaje, este avi&oacute;n all&iacute; espera que la torre lo autorice para aterrizar, es por ello que el puerto Out de la cola de aterrizaje se conecta al puerto In_a de la torre de control, el puerto de entrada de la cola Done y el puerto Stop estan conectados al los puertos Done_a y Stop_a respectivamente, es por estos puertos que la torre de control les autoriza el aterrizaje ya que la pista se encuentra vac&iacute;a.  Este avi&oacute;n entonces es direccionado a la pista de aterrizaje por el puerto aterriza (port de salida) que se conecta al puerto aterriza de la pista (port de entrada), como este avi&oacute;n es recibido por el port de aterriza luego del minuto es enviado por el puerto de salida out_a (de la pista) al puerto de entrada In del modelo hangar.  Luego pasa a su dep&oacute;sito para ser enviado por el puerto de salida Out del Hangar al puerto de entrada In de la cola de despegue, y nuevamente esta cola pide autorizaci&oacute;n para despegar.  Dicha cola utiliza los mensajes que le env&iacute;a la torre de control es por ello que los ports de entrada Stop y Done de la cola de despegue estan conectados a Stop_d y Done_d respectivamente.  Por &uacute;ltimo el puerto Out de la cola se conecta al puerto de entrada de la torre de control In_d, la torre de control lo env&iacute;a al puerto despega de la pista (pot de entrada), la pista lo detiene durante un minuto que es el tiempo de operaci&oacute;n y lo env&iacute;a por el puerto salida_d a el port de salida Out del modelo acoplado Aeropuerto. </P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P>
+<B><P>Apendice A</P>
+</B>
+<P>&nbsp;</P>
+<B><P>Analisis de las salidas</P>
+</B>
+<P ALIGN="JUSTIFY">&#9;Como primer caso de an&aacute;lisis tomaremos una entrada en la cual nos llegan seis aviones de distintos dep&oacute;sitos todos al mismo instante.</P>
+
+<P>00:01:00:00 in_a 1.111</P>
+<P>00:01:00:00 in_a 250.111</P>
+<P>00:01:00:00 in_a 500.111</P>
+<P>00:01:00:00 in_a 999.111</P>
+<P>00:01:00:00 in_a 900.111</P>
+<P>00:01:00:00 in_a 2.222</P>
+
+<P>&#9;Obteniendo como salida:</P>
+
+<P>00:07:00:000 out_d 1.111</P>
+<P>00:08:00:000 out_d 250.111</P>
+<P>00:09:00:000 out_d 500.111</P>
+<P>00:10:00:000 out_d 999.111</P>
+<P>00:11:00:000 out_d 900.111</P>
+<P>00:12:00:000 out_d 2.222</P>
+
+<P ALIGN="JUSTIFY">&#9;Aqu&iacute; claramente los aviones ingresan a la cola de aterrizaje, entonces la cola contiene a los seis aviones, la torre de control autoriza el aterizaje del primero y el avion 1,111 aterriza y es llevado a su dep&oacute;sito (deposito1), luego al minuto (00:02:00:00) aterriza el segundo avi&oacute;n 250,11, el avi&oacute;n 1,111 esta listo para despegar en la cola de despegue pero la prioridad esta dada para el aterrizaje por ello los aviones a medida que salen del Hangar se acumulan en la cola de salida, luego de que aterricen todos recien all&iacute; pueden despegar todos los aviones.</P>
+<P> </P>
+
+<P ALIGN="JUSTIFY">&#9;Otro ejemplo que probamos es enviar 49 aviones para corroborar que no perdemos aviones:</P>
+
+<P>00:01:00:00 in_a 1</P>
+<P>00:12:00:00 in_a 2</P>
+<P>00:45:00:00 in_a 3</P>
+<P>00:46:00:00 in_a 4</P>
+<P>00:49:00:00 in_a 5</P>
+<P>00:50:00:00 in_a 6</P>
+<P>00:52:00:00 in_a 7</P>
+<P>00:53:30:00 in_a 8</P>
+<P>00:55:30:00 in_a 9</P>
+<P>00:58:30:00 in_a 10</P>
+<P>01:01:00:00 in_a 11</P>
+<P>01:12:00:00 in_a 12</P>
+<P>01:45:00:00 in_a 13</P>
+<P>01:46:00:00 in_a 14</P>
+<P>01:49:00:00 in_a 15</P>
+<P>01:50:00:00 in_a 16</P>
+<P>01:52:00:00 in_a 17</P>
+<P>01:53:30:00 in_a 18</P>
+<P>01:55:30:00 in_a 19</P>
+<P>01:58:30:00 in_a 20</P>
+<P>02:01:00:00 in_a 21</P>
+<P>02:12:00:00 in_a 22</P>
+<P>02:45:00:00 in_a 23</P>
+<P>02:46:00:00 in_a 24</P>
+<P>02:49:00:00 in_a 25</P>
+<P>02:50:00:00 in_a 26</P>
+<P>02:52:00:00 in_a 27</P>
+<P>02:53:30:00 in_a 28</P>
+<P>02:55:30:00 in_a 29</P>
+<P>02:58:30:00 in_a 30</P>
+<P>03:01:00:00 in_a 31</P>
+<P>03:12:00:00 in_a 32</P>
+<P>03:45:00:00 in_a 33</P>
+<P>03:46:00:00 in_a 34</P>
+<P>03:49:00:00 in_a 35</P>
+<P>03:50:00:00 in_a 36</P>
+<P>03:52:00:00 in_a 37</P>
+<P>03:53:30:00 in_a 38</P>
+<P>03:55:30:00 in_a 39</P>
+<P>04:58:30:00 in_a 40</P>
+<P>04:01:00:00 in_a 41</P>
+<P>04:12:00:00 in_a 42</P>
+<P>04:45:00:00 in_a 43</P>
+<P>04:46:00:00 in_a 44</P>
+<P>04:49:00:00 in_a 45</P>
+<P>04:50:00:00 in_a 46</P>
+<P>04:52:00:00 in_a 47</P>
+<P>04:53:30:00 in_a 48</P>
+<P>04:55:30:00 in_a 49</P>
+<P>04:58:30:00 in_a 49</P>
+
+<P>El resultado obtenido es el despegue de los 49 aviones del aeropuerto:</P>
+
+<P>00:02:00:000 out_d 1</P>
+<P>00:13:00:000 out_d 2</P>
+<P>00:47:00:000 out_d 3</P>
+<P>00:48:00:000 out_d 4</P>
+<P>00:51:00:000 out_d 5</P>
+<P>00:53:00:000 out_d 6</P>
+<P>00:55:00:000 out_d 7</P>
+<P>00:57:00:000 out_d 8</P>
+<P>00:58:00:000 out_d 9</P>
+<P>01:00:00:000 out_d 10</P>
+<P>01:02:00:000 out_d 11</P>
+<P>01:13:00:000 out_d 12</P>
+<P>01:47:00:000 out_d 13</P>
+<P>01:48:00:000 out_d 14</P>
+<P>01:51:00:000 out_d 15</P>
+<P>01:53:00:000 out_d 16</P>
+<P>01:55:00:000 out_d 17</P>
+<P>01:57:00:000 out_d 18</P>
+<P>01:58:00:000 out_d 19</P>
+<P>02:00:00:000 out_d 20</P>
+<P>02:02:00:000 out_d 21</P>
+<P>02:13:00:000 out_d 22</P>
+<P>02:47:00:000 out_d 23</P>
+<P>02:48:00:000 out_d 24</P>
+<P>02:51:00:000 out_d 25</P>
+<P>02:53:00:000 out_d 26</P>
+<P>02:55:00:000 out_d 27</P>
+<P>02:57:00:000 out_d 28</P>
+<P>02:58:00:000 out_d 29</P>
+<P>03:00:00:000 out_d 30</P>
+<P>03:02:00:000 out_d 31</P>
+<P>03:13:00:000 out_d 32</P>
+<P>03:47:00:000 out_d 33</P>
+<P>03:48:00:000 out_d 34</P>
+<P>03:51:00:000 out_d 35</P>
+<P>03:53:00:000 out_d 36</P>
+<P>03:55:00:000 out_d 37</P>
+<P>03:57:00:000 out_d 38</P>
+<P>03:58:00:000 out_d 39</P>
+<P>04:02:00:000 out_d 41</P>
+<P>04:13:00:000 out_d 42</P>
+<P>04:47:00:000 out_d 43</P>
+<P>04:48:00:000 out_d 44</P>
+<P>04:51:00:000 out_d 45</P>
+<P>04:53:00:000 out_d 46</P>
+<P>04:55:00:000 out_d 47</P>
+<P>04:57:00:000 out_d 48</P>
+<P>04:58:00:000 out_d 49</P>
+<P>05:01:00:000 out_d 40</P>
+<P>05:02:00:000 out_d 49</P>
+
+<P>&nbsp;</P>
+<P>&nbsp;</P></FONT></BODY>
+</HTML>

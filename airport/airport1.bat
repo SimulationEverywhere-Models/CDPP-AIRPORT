@@ -1,0 +1,1 @@
+simu -maeropuer.ma -eaero1.ev -oairport1.out -lairport1.log
